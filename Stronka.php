@@ -142,6 +142,7 @@ $conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "000
         ?>
                value="Zamów">
     </form>
+
     <?php
     error_reporting(null);
     $odb = $_POST["placowki"];
@@ -164,6 +165,19 @@ $conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "000
 
         $sql = sprintf("UPDATE Egzemplarze SET status= %s WHERE idEgzemplarza=%s;", $statusEgz, $egzemplarz);
         $conn->query($sql);
+
+        $sql = sprintf("SELECT idZamowienia FROM Zamowienia WHERE idEgzemplarza=%s;", $egzemplarz);
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        $id = $row["idZamowienia"];
+    }
+    ?>
+</div>
+
+<div style="width: 350px;margin: 0 auto ; padding-top: 20px; clear: left">
+    <?php
+    if ($odb != "") {
+        echo "<marquee><span style='font-family: \"Comic Sans MS\";color: white;text-align: center ;font-size: 23px; '> <br> IDTransakcji: " . $id . ". Podaj ten numer sprzedawcy.</span></marquee>";
     }
     ?>
 </div>
