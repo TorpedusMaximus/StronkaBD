@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "", "00018732_kw");
+$conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "00018732_kw");
 ?>
 <html lang="pl">
 <head>
@@ -50,12 +50,12 @@ $conn = mysqli_connect("localhost", "root", "", "00018732_kw");
 <div style="height:500px;width:800px;border:1px solid black; overflow: scroll">
     <table style="width:100%">
         <?php
-        $idEgzemplarza = -1;
+        $idGry = -1;
         $sql = "SELECT idGry, nazwa, rokWydania, wydawca, gatunek FROM Gry;";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["idGry"] . "</td><td>" . $row["nazwa"] . "</td><td>" . $row["rokWydania"] . "</td><td>" . $row["wydawca"] . "</td><td>" . $row["gatunek"] . "</td></tr>";
+                echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $row["idGry"], $row["nazwa"], $row["rokWydania"], $row["wydawca"], $row["gatunek"]);
             }
         } else {
             echo "0 results";
@@ -84,11 +84,11 @@ $conn = mysqli_connect("localhost", "root", "", "00018732_kw");
 <div style="height:500px;width:800px;border:1px solid black; overflow: scroll">
     <table style="width:100%">
         <?php
-        $sql = "SELECT idEgzemplarza, stan, cena, idPlacówka FROM Gry; WHERE idGry = " . $idEgzemplarza;
+        $sql = "SELECT idEgzemplarza, stan, cena, idPlacówka FROM Gry; WHERE idGry = " . $idGry;
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["nazwa"] . "</td><td>" . $row["rokWydania"] . "</td><td>" . $row["wydawca"] . "</td><td>" . $row["gatunek"] . "</td></tr>";
+                echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $row["nazwa"], $row["rokWydania"], $row["wydawca"], $row["gatunek"]);
             }
         } else {
             echo "0 results";
