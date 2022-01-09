@@ -39,12 +39,9 @@ $conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "000
 <body>
 
 <div style="margin: 0 auto; height : 40px; width: 194px;  padding-top: 150px;">
-    <form method="post">
+    <form method="get">
         <input style="width: 95px" type="text" id="tytul" name="tytul">
-        <input style="width: 95px" type="submit" <?php
-        error_reporting(null);
-        ?>
-               value="Szukaj">
+        <input style="width: 95px" type="submit" value="Szukaj">
     </form>
 </div>
 
@@ -75,7 +72,7 @@ $conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "000
             <table style="width:100%">
                 <?php
                 error_reporting(null);
-                $tytul = '%'.$_POST["tytul"].'%';
+                $tytul = '%'.$_GET["tytul"].'%';
                 if($tytul=="%%"){
                     $sql = "SELECT idGry, nazwa, rokWydania, wydawca, gatunek FROM Gry;";
                 }else{
@@ -84,10 +81,8 @@ $conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "000
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        echo sprintf("<tr onclick=\"location.href='index.php?gra=%s'\"><td style=\"width:45px\">%s</td><td style=\"width:235px\">%s</td><td style=\"width:45px\">%s</td><td style=\"width:243px\">%s</td><td style=\"width:132px\">%s</td></tr>", $row["idGry"], $row["idGry"], $row["nazwa"], $row["rokWydania"], $row["wydawca"], $row["gatunek"]);
+                        echo sprintf("<tr onclick=\"location.href='index.php?tytul=%s&gra=%s'\"><td style=\"width:45px\">%s</td><td style=\"width:235px\">%s</td><td style=\"width:45px\">%s</td><td style=\"width:243px\">%s</td><td style=\"width:132px\">%s</td></tr>",$_GET["tytul"], $row["idGry"], $row["idGry"], $row["nazwa"], $row["rokWydania"], $row["wydawca"], $row["gatunek"]);
                     }
-                } else {
-                    echo "0 results";
                 }
                 ?>
             </table>
@@ -137,7 +132,7 @@ $conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "000
                                     $stan = "wzorowy";
                                     break;
                             }
-                            echo sprintf("<tr onclick=\"location.href='index.php?gra=%s&egzemplarz=%s'\"><td style='width: 120px'>%s</td><td style='width: 210px'>%s</td><td style='width: 100px'>%szł</td><td style='width: auto'>%s</td></tr>", $gra, $row["idEgzemplarza"], $row["idEgzemplarza"], $stan, $row["cena"], $row["miasto"]);
+                            echo sprintf("<tr onclick=\"location.href='index.php?tytul=%s&gra=%s&egzemplarz=%s'\"><td style='width: 120px'>%s</td><td style='width: 210px'>%s</td><td style='width: 100px'>%szł</td><td style='width: auto'>%s</td></tr>",$tytul, $gra, $row["idEgzemplarza"], $row["idEgzemplarza"], $stan, $row["cena"], $row["miasto"]);
                         }
                     }
                 }
