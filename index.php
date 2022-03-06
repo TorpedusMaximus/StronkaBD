@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("czaplinek.home.pl:3306", "00018732_kw", "Kajet@nW0j25", "00018732_kw");
+$conn = new mysqli("linkDoBazy", "login", "haslo", "baza");
 ?>
 <html lang="pl">
 <head>
